@@ -14,12 +14,14 @@ function love.load()
   ballDY = love.math.random( 0, 1 );
   playerP = 0;
   enemyP = 0;
-
+  sfx = love.audio.newSource("sfx.wav", "static")
+  claps = love.audio.newSource("claps.wav", "static")
+  boo = love.audio.newSource("boo.mp3", "static")
 end
 
 function love.update(dt)
   playerY = playerYT;
-  enemyYT = ballY;
+  enemyYT = ballY - 5;
 
   if love.keyboard.isDown( "down" ) and playerY < 255 then
     playerYT = playerYT + playerV
@@ -85,12 +87,14 @@ function love.update(dt)
     ballV = ballV + 0.1
     enemyV = enemyV + 0.2
     playerV = playerV + 0.8
+    love.audio.play(sfx)
   end
   if ballX >= 410 - 16 and ballY > enemyY and ballY < enemyY + 80 then
     ballD = 0
     ballV = ballV + 0.1
     enemyV = enemyV + 0.2
     playerV = playerV + 0.2
+    love.audio.play(sfx)
   end
 
   if ballX < -20 then
@@ -102,6 +106,7 @@ function love.update(dt)
     enemyV = 3;
     playerV = 3;
     enemyP = enemyP + 1;
+    love.audio.play(boo)
   end
   if ballX > 450 then
     ballX = 225;
@@ -112,6 +117,7 @@ function love.update(dt)
     enemyV = 3;
     playerV = 3;
     playerP = playerP + 1;
+    love.audio.play(claps)
   end
 
   if playerP > 9 then
